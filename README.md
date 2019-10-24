@@ -49,3 +49,53 @@ open bin/nexus.rc and make sure the following line is present
   sudo service nexus start
 ```
 
+## Loging to Nexus3 using browser
+
+```
+  http:public-ip:8081
+  and follow instructions to get access to nexus
+```
+
+## Store artifacts into nexus
+
+We are going to use following repositories to store artifacts
+
+Nexus settings --> repositories
+  - maven-release
+  - maven-snapshots
+
+## Under Maven configure Nexus details
+
+### 1. Configure nexus user/password.
+
+Open maven settings($MAVEN_HOME/conf/settings.xml) file and add following snippet
+
+```XML
+   <servers>
+    <server>
+      <id>nexusRepo</id>
+      <username>admin</username>
+      <password>javahome</password>
+    </server>
+  </servers>
+```
+
+### 1. Configure pom.xml of your project
+
+Make suer the following snippet exists in pom.xml
+
+```XML
+  <distributionManagement>
+		 <snapshotRepository>
+		    <id>nexusRepo</id>
+		    <url>http://13.233.230.166:8081/repository/maven-snapshots/</url>
+		 </snapshotRepository>
+		
+		<repository>
+		    <id>nexusRepo</id>
+		    <url>http://13.233.230.166:8081/repository/maven-releases/</url>
+		</repository>
+  	</distributionManagement>
+
+```
+
